@@ -1,6 +1,10 @@
+import os
 import pickle
 import streamlit as st
 from streamlit_option_menu import option_menu
+
+# Get absolute path to the directory containing this script
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Configure the Streamlit page layout first
 st.set_page_config(page_title="Multiple Disease Prediction System", layout="wide")
@@ -22,30 +26,31 @@ def set_bg_from_url(url):
 # Set background safely using standard container targeting
 set_bg_from_url("https://images.everydayhealth.com/homepage/health-topics-2.jpg?w=768")
 
-# Loading the saved models safely
+# Safe model & scaler loading functions with absolute paths
 models = {}
 
-def safely_load_model(model_name, filename):
+def safely_load_model(filename):
     try:
-        return pickle.load(open(filename, 'rb'))
+        filepath = os.path.join(BASE_DIR, filename)
+        return pickle.load(open(filepath, 'rb'))
     except Exception as e:
         return None
 
-models['diabetes'] = safely_load_model('diabetes', 'diabetes_model.sav')
-models['heart'] = safely_load_model('heart', 'heart_disease_model.sav')
-models['parkinsons'] = safely_load_model('parkinsons', 'parkinsons_model.sav')
-models['breast'] = safely_load_model('breast', 'breast_cancer_model.sav')
-models['kidney'] = safely_load_model('kidney', 'kidney_disease_model.sav')
-models['liver'] = safely_load_model('liver', 'liver_disease_model.sav')
+models['diabetes'] = safely_load_model('diabetes_model.sav')
+models['heart'] = safely_load_model('heart_disease_model.sav')
+models['parkinsons'] = safely_load_model('parkinsons_model.sav')
+models['breast'] = safely_load_model('breast_cancer_model.sav')
+models['kidney'] = safely_load_model('kidney_disease_model.sav')
+models['liver'] = safely_load_model('liver_disease_model.sav')
 
 def safely_load_scaler(filename):
     try:
-        return pickle.load(open(filename, 'rb'))
+        filepath = os.path.join(BASE_DIR, filename)
+        return pickle.load(open(filepath, 'rb'))
     except Exception:
         return None
 
 liver_scaler = safely_load_scaler('liver_disease_scaler.sav')
-# ----------------------------------
 
 # Sidebar navigation design
 with st.sidebar:
@@ -78,7 +83,6 @@ if selected == 'Diabetes Prediction':
     with col1: DiabetesPedigreeFunction = st.text_input('Diabetes Pedigree Function value', placeholder='e.g. 0.47')
     with col2: Age = st.text_input('Age of the Person', placeholder='e.g. 33')
     
-    # FIXED: Indented this block so it belongs strictly inside the Diabetes page condition
     if st.button('Diabetes Test Result'):
         if models['diabetes'] is None:
             st.error("This model file is incompatible or missing. Please re-train it inside its notebook first!")
@@ -275,7 +279,8 @@ elif selected == 'Liver Disease Prediction':
     with col3: albumin = st.text_input('Albumin', placeholder='e.g. 3.3')
     with col1: albumin_and_globulin_ratio = st.text_input('Albumin and Globulin Ratio', placeholder='e.g. 0.9')
     
-if st.button('Liver Disease Test Result'):
+    # Correctly indented under the Liver tab
+    if st.button('Liver Disease Test Result'):
         if models['liver'] is None or liver_scaler is None:
             st.error("Model or scaler file is missing. Please re-run the training notebook first!")
         else:
