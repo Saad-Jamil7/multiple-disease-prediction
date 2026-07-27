@@ -1,79 +1,94 @@
-# Multiple Disease Prediction System using Machine Learning
+# Multiple Disease Prediction System Using Machine Learning
 
-![mdps - github1](https://github.com/shaadclt/Multiple-Disease-Prediction-System/assets/98437584/fdabe788-d49c-4996-8ee4-b1e0e37f09dc)
+## Project Title
+Multiple Disease Prediction System Using Machine Learning
 
+## Group Members
+- Saad Jamil
+- Ahmed Siddiqui
+- Wania Imran
 
-This project provides a streamlit web application for predicting multiple diseases, including diabetes, Parkinson's disease, and heart disease, using machine learning algorithms. The prediction models are deployed using Streamlit, a Python library for building interactive web applications.
+## Objective
+To build a single web application that predicts a patient's likelihood of having any of six diseases — diabetes, heart disease, Parkinson's disease, breast cancer, chronic kidney disease, and liver disease — from structured clinical measurements. Each disease is handled by an independently trained classical machine learning model (Support Vector Machine or Logistic Regression), and all six are served through one interactive Streamlit interface.
 
-## Table of Contents
+## Required Libraries
+Listed in `requirements.txt`:
+- `streamlit` — web application framework
+- `streamlit-option-menu==0.3.2` — sidebar navigation menu component
+- `scikit-learn==1.0.2` — model training and inference (pinned to match the version models were trained/pickled with)
+- `pandas` — data loading and cleaning
+- `numpy` — numeric array handling
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Setup](#setup)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+## Installation Steps
 
-## Introduction
+1. Clone or download this repository, and open a terminal in the project folder.
 
-The Multiple Disease Prediction project aims to create a user-friendly web application that allows users to input relevant medical information and receive predictions for different diseases. The machine learning models trained on disease-specific datasets enable accurate predictions for diabetes, Parkinson's disease, and heart disease.
+2. (Recommended) Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate      # Windows: venv\Scripts\activate
+   ```
 
-## Features
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-The Multiple Disease Prediction web application offers the following features:
+4. Ensure the following files are present in the same folder as `multiplediseaseprediction.py` (all included in this submission):
+   - `diabetes_model.sav`
+   - `heart_disease_model.sav`
+   - `parkinsons_model.sav`
+   - `breast_cancer_model.sav`
+   - `kidney_disease_model.sav`
+   - `liver_disease_model.sav`
+   - `liver_disease_scaler.sav`
 
-- **User Input**: Users can input their medical information, including age, gender, blood pressure, cholesterol levels, and other relevant factors.
-- **Disease Prediction**: The application utilizes machine learning models to predict the likelihood of having diabetes, Parkinson's disease, and heart disease based on the inputted medical data.
-- **Prediction Results**: The predicted disease outcomes are displayed to the user, providing an indication of the probability of each disease.
-- **Visualization**: Visualizations are generated to highlight important features and provide insights into the prediction process.
-- **User-Friendly Interface**: The web application offers an intuitive and user-friendly interface, making it easy for individuals without technical knowledge to use the prediction tool.
+## How to Run the Project
 
-## Setup
+1. From the project folder, run:
+   ```bash
+   streamlit run multiplediseaseprediction.py
+   ```
 
-To use this project locally, follow these steps:
+2. Streamlit will start a local server and print a URL (typically `http://localhost:8501`) — open it in a web browser if it doesn't open automatically.
 
-1. Clone the repository:
+3. Use the sidebar navigation menu to select a disease to test.
 
-```bash
-git clone https://github.com/shaadclt/Multiple-Disease-Prediction-System.git
+4. Fill in the requested numeric clinical values (placeholder examples are shown in each field).
+
+5. Click the **Predict** button for that disease to see the result.
+
+### Re-training a model (optional)
+Each disease has its own training notebook (`Diabetes_Model.ipynb`, `Heart_Model.ipynb`, `Parkinson_Model.ipynb`, `Breast_Cancer_Model.ipynb`, `Kidney_Model.ipynb`, `Liver_Model_FIXED.ipynb`). Running a notebook end-to-end regenerates its corresponding `.sav` file(s) from the raw dataset CSV.
+
+## Expected Output
+
+- A browser tab opens showing **"Multiple Disease Prediction System"** with a sidebar listing all six diseases.
+- Selecting a disease shows a form of labelled numeric input fields matching that model's training features.
+- After entering values and clicking Predict, the app displays either:
+  - A **green success box** — e.g. "The person is not diabetic", or
+  - A **red error box** — e.g. "The person is diabetic"
+- If a required model file is missing, the app shows a clear error message for that specific disease page rather than crashing the whole application.
+- Approximate test-set accuracy by disease (see project report for full details): Diabetes ~77%, Heart Disease ~82%, Parkinson's ~87%, Breast Cancer ~97%, Kidney Disease ~93%, Liver Disease evaluated primarily via confusion matrix/F1-score due to class imbalance.
+
+## Project Structure
+```
+├── multiplediseaseprediction.py     # Main Streamlit application
+├── requirements.txt                  # Python dependencies
+├── Diabetes_Model.ipynb              # Training notebook — Diabetes
+├── Heart_Model.ipynb                 # Training notebook — Heart Disease
+├── Parkinson_Model.ipynb             # Training notebook — Parkinson's
+├── Breast_Cancer_Model.ipynb         # Training notebook — Breast Cancer
+├── Kidney_Model.ipynb                # Training notebook — Kidney Disease
+├── Liver_Model_FIXED.ipynb           # Training notebook — Liver Disease
+├── diabetes.csv / heart.csv / parkinsons.csv
+│   / breast_cancer.csv / kidney_disease.csv / liver_disease.csv   # Datasets
+├── *_model.sav                       # Trained models (pickled)
+└── liver_disease_scaler.sav          # Fitted StandardScaler for the liver model
 ```
 
-2. Install the required dependencies by running:
+## Acknowledgement
+This project extends an open-source three-disease template ("Multiple Disease Prediction System" by shaadclt on GitHub, covering diabetes, heart disease, and Parkinson's) with three additional disease modules built by this team: breast cancer, chronic kidney disease, and liver disease, each with its own dataset, data-cleaning pipeline, and trained model, integrated into a single shared application.
 
-```bash
-pip install -r requirements.txt
-```
-
-3. Download the pre-trained machine learning models for diabetes, Parkinson's disease, and heart disease. Make sure to place them in the appropriate directories within the project structure.
-
-4. Update the necessary configurations and file paths in the project files.
-
-## Usage
-
-To run the Multiple Disease Prediction web application, follow these steps:
-
-1. Open a terminal or command prompt and navigate to the project directory.
-
-2. Run the following command to start the Streamlit application:
-
-```bash
-streamlit run multiplediseaseprediction.py
-```
-
-3. Access the web application by opening the provided URL in your web browser.
-
-4. Input the relevant medical information as requested by the application.
-
-5. Click the "Predict" button to generate predictions for diabetes, Parkinson's disease, and heart disease based on the provided data.
-
-6. View the prediction results and any accompanying visualizations or insights.
-
-Feel free to customize the web application's appearance, add more disease prediction models, or integrate additional features based on your specific requirements.
-
-## Contributing
-
-Contributions to this project are welcome. If you find any issues or have suggestions for improvement, please open an issue or submit a pull request on the project's GitHub repository.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE). You are free to modify and use the code for both personal and commercial purposes.
+## Disclaimer
+This is an educational course project, not a validated medical diagnostic tool. Predictions should not be used for real clinical decision-making.
