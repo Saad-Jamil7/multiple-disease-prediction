@@ -1,5 +1,6 @@
 # Multiple Disease Prediction System Using Machine Learning
-<img width="1366" height="700" alt="image" src="https://github.com/user-attachments/assets/1ad44cfa-d817-437c-936e-dfeb18080764" />
+<img width="1363" height="613" alt="MDPS images" src="https://github.com/user-attachments/assets/4bf82cfc-9be7-498e-9e8b-26583c000227" />
+
 
 ## Project Title
 Multiple Disease Prediction System Using Machine Learning
