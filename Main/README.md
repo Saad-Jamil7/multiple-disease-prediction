@@ -88,7 +88,7 @@ Each disease has its own training notebook (`Diabetes_Model.ipynb`, `Heart_Model
 ```
 
 ## Acknowledgement
-This project extends an open-source three-disease template ("Multiple Disease Prediction System" by shaadclt on GitHub, covering diabetes, heart disease, and Parkinson's) with three additional disease modules built by this team: breast cancer, chronic kidney disease, and liver disease, each with its own dataset, data-cleaning pipeline, and trained model, integrated into a single shared application.
+This project is done with six disease modules built by this team: diabetes,heart disease,parkinson disease ,breast cancer, chronic kidney disease, and liver disease, each with its own dataset, data-cleaning pipeline, and trained model, integrated into a single shared application.
 
 ## Disclaimer
 This is an educational course project, not a validated medical diagnostic tool. Predictions should not be used for real clinical decision-making.
